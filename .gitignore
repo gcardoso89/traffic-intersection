@@ -4,3 +4,7 @@ node_modules/*
 
 #WebStorm
 .idea
+
+#Node Compass
+.sass-cache
+.sass-cache/*
