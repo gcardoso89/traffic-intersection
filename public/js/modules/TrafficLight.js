@@ -1,14 +1,22 @@
-import { LIGHT_STATES, TRAFFIC_LIGHT_IDS, LIGHT_NAMES } from "../config";
+import { LIGHT_STATES } from "../config";
+import TrafficLightView from "../views/TrafficLightView";
 
 /**
  * Traffic Light class
+ * This class is responsible for keeping the correct state of each Traffic Light.
  */
 export default class TrafficLight {
 	constructor( id ) {
 		this._id = id;
 		this._currentState = LIGHT_STATES.RED;
+		this._view = new TrafficLightView( this );
 	}
 
+	/**
+	 * Update the currentState for the newState
+	 * @param newState
+	 * @returns {number|*}
+	 */
 	changeState( newState ) {
 		//Don't let a traffic light to be changed from RED to YELLOW
 		if ( this._currentState === LIGHT_STATES.RED && newState === LIGHT_STATES.YELLOW ){
@@ -22,8 +30,7 @@ export default class TrafficLight {
 		}
 
 		this._currentState = newState;
-
-		console.log( `${TRAFFIC_LIGHT_IDS[this._id]} is ${ LIGHT_NAMES[ this._currentState ] }`);
+		this._view.update( this._currentState );
 
 		return this._currentState;
 	}

@@ -18,7 +18,7 @@ export const LIGHT_NAMES = {
 	0: 'RED',
 	1: 'YELLOW',
 	2: 'GREEN'
-}
+};
 
 export const TRAFFIC_LIGHT_IDS = {
 	"N": "North",

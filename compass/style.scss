@@ -1,7 +1,73 @@
 @import "compass/css3";
 
-body {  background: yellow }
+.traffic-intersection {
+	width: 500px;
+	height: 500px;
+	background: url('../images/four-way-intersection.png') no-repeat left top;
+	background-size: 100% 100%;
+	position: relative;
+	margin: 0 auto;
+}
 
-a {
-	color: #00B7FF;
+.traffic-light {
+	$width: 500px;
+	$height: 1700px;
+	$widthVal: $width * 0.03;
+	$heightVal: $height * 0.03;
+	width: $widthVal;
+	height: $heightVal;
+	background: url('../images/traffic-light.png') no-repeat left top;
+	background-size: 100% 100%;
+	position: absolute;
+
+	&:after{
+		content:" ";
+		width: $widthVal * 0.6;
+		height: $widthVal * 0.6;
+		@include border-radius( $widthVal );
+		position: absolute;
+		left:18%;
+	}
+
+	&.red:after{
+		top:4%;
+		background: red;
+		@include box-shadow( 0px 0px 10px 4px red );
+	}
+
+	&.yellow:after{
+		top:26%;
+		background: yellow;
+		@include box-shadow( 0px 0px 10px 4px yellow );
+	}
+
+	&.green:after{
+		top:48%;
+		background: #00FF00;
+		@include box-shadow( 0px 0px 10px 4px #00FF00 );
+	}
+
+	&#traffic-light-north {
+		left: 30%;
+		top: 25%;
+		@include transform(rotate(180deg));
+	}
+
+	&#traffic-light-south {
+		right: 30%;
+		bottom: 25%;
+		@include transform(rotate(0deg));
+	}
+
+	&#traffic-light-east {
+		right: 28%;
+		top: 27%;
+		@include transform(rotate(270deg));
+	}
+
+	&#traffic-light-west {
+		left: 28%;
+		bottom: 27%;
+		@include transform(rotate(90deg));
+	}
 }
