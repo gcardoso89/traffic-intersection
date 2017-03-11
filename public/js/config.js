@@ -38,8 +38,8 @@ export const STREETS = {
 };
 
 export const TIMINGS = {
-	1: 2 * ONE_SECOND,
-	2: 1 * ONE_SECOND,
-	3: 2 * ONE_SECOND,
-	4: 1 * ONE_SECOND
+	1: 4.5 * ONE_MINUTE,
+	2: 30 * ONE_SECOND,
+	3: 4.5 * ONE_MINUTE,
+	4: 30 * ONE_SECOND
 };

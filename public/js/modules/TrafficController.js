@@ -1,6 +1,10 @@
 import TrafficIntersection from "./TrafficIntersection";
 import { TIMINGS, INTERSECTION_STATES, STREETS, LIGHT_STATES } from "../config";
 
+/**
+ * This is the main class of the Traffic Intersection.
+ * Has a state machine that controls the intersection states.
+ */
 export default class TrafficController {
 	constructor() {
 		this._intersection = new TrafficIntersection();
@@ -11,8 +15,13 @@ export default class TrafficController {
 		this._shouldStopStateMachine = false;
 	}
 
+	/**
+	 * Waits for each state to be completed, until moving to the next one.
+	 * When it reaches the end, the state machine is restarted.
+	 * @returns {boolean}
+	 * @private
+	 */
 	async _intersectionStateMachine() {
-
 		await this._changeState( INTERSECTION_STATES.RED_GREEN );
 		
 		await this._changeState( INTERSECTION_STATES.RED_YELLOW );
@@ -47,6 +56,13 @@ export default class TrafficController {
 		}
 	}
 
+	/**
+	 * Returns a Promise to block the async function from moving forward, until it reaches the final timing.
+	 * When the state delay ends, the Promise is fulfilled and the async function moves the following state.
+	 * @param newState
+	 * @returns {Promise}
+	 * @private
+	 */
 	_changeState( newState ) {
 		this._currentPromiseRunning = null;
 
@@ -66,6 +82,12 @@ export default class TrafficController {
 		} );
 	}
 
+	/**
+	 * When the state is changed, the traffic lights of each street should change to the correct lights.
+	 * This function guarantees that each street has the correct light state.
+	 * @param currentState
+	 * @private
+	 */
 	_changeIntersectionState( currentState ){
 		switch ( currentState ){
 			case INTERSECTION_STATES.RED_GREEN:
