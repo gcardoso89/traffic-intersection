@@ -2,7 +2,7 @@ var path = require( 'path' );
 var webpack = require( "webpack" );
 
 module.exports = {
-	entry: [ './public/js/main.js' ],
+	entry: [ 'babel-polyfill', './public/js/main.js' ],
 	output: {
 		path: path.join( __dirname, '/public/js/' ),
 		filename: 'app.js'

@@ -1,7 +1,4 @@
-class Main {
-	constructor(){
-		
-	}
-}
+import TrafficController from "./modules/TrafficController";
 
-new Main();
+let trafficController = new TrafficController();
+trafficController.start();

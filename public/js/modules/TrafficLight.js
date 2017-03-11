@@ -1,7 +1,11 @@
-import { LIGHT_STATES } from "../config";
+import { LIGHT_STATES, TRAFFIC_LIGHT_IDS, LIGHT_NAMES } from "../config";
 
+/**
+ * Traffic Light class
+ */
 export default class TrafficLight {
-	constructor() {
+	constructor( id ) {
+		this._id = id;
 		this._currentState = LIGHT_STATES.RED;
 	}
 
@@ -18,11 +22,17 @@ export default class TrafficLight {
 		}
 
 		this._currentState = newState;
-		
+
+		console.log( `${TRAFFIC_LIGHT_IDS[this._id]} is ${ LIGHT_NAMES[ this._currentState ] }`);
+
 		return this._currentState;
 	}
 
 	getCurrentState() {
 		return this._currentState;
+	}
+	
+	getId() {
+		return this._id;
 	}
 }
