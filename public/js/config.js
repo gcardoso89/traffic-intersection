@@ -1,0 +1,6 @@
+export const STATES = {
+	RED_GREEN: 1,
+	RED_YELLOW: 2,
+	GREEN_RED: 3,
+	YELLOW_RED: 4
+};
