@@ -1,6 +1,12 @@
-export const STATES = {
+export const INTERSECTION_STATES = {
 	RED_GREEN: 1,
 	RED_YELLOW: 2,
 	GREEN_RED: 3,
 	YELLOW_RED: 4
+};
+
+export const LIGHT_STATES = {
+	RED: 0,
+	YELLOW: 1,
+	GREEN: 2
 };
