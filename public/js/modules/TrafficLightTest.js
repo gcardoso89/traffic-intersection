@@ -1,11 +1,20 @@
 import TrafficLight from "./TrafficLight";
 import { LIGHT_STATES, TRAFFIC_LIGHT_IDS } from "../config";
+import chai from "chai";
+import jsdom from "mocha-jsdom";
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var should = chai.should();
+var	expect = chai.expect,
+	should = chai.should();
 
 describe( "Traffic Light", function () {
+
+	var $;
+	jsdom();
+
+	before(() => {
+		$ = require('jquery');
+		global.$ = $;
+	});
 
 	it( 'should be initialized with one of the available IDs', () => {
 		let trafficLight = new TrafficLight( "N" );

@@ -1,12 +1,21 @@
 import TrafficIntersection from "./TrafficIntersection";
 import TrafficLight from "./TrafficLight";
 import { INTERSECTION_LAYOUT, STREETS } from "../config";
+import chai from "chai";
+import jsdom from "mocha-jsdom";
 
-var chai = require( 'chai' );
-var expect = chai.expect;
+var	expect = chai.expect;
 
 describe( "Traffic Intersection", function () {
+	
+	var $;
+	jsdom();
 
+	before(() => {
+		$ = require('jquery');
+		global.$ = $;
+	});
+	
 	it( 'should create an intersection with the streets configured', function () {
 		let intersection = new TrafficIntersection();
 

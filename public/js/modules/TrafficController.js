@@ -42,7 +42,10 @@ export default class TrafficController {
 		return this._isStateMachineRunning;
 	}
 
-	start() {
+	start( duration ) {
+		if ( duration ){
+			
+		}
 		this._isStateMachineRunning = true;
 		this._shouldStopStateMachine = false;
 		this._intersectionStateMachine();

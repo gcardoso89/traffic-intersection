@@ -3,7 +3,7 @@ import { INTERSECTION_LAYOUT } from "../config";
 
 /**
  * This class is responsible to create the (N,S) and (W,E) traffic light pairs, creating STREETS for that purpose.
- * Having this, when the street state is changed, each traffic light pair is changed immediately too.
+ * Having this, when the street state is changed, each traffic light pair is changed immediately
  */
 export default class TrafficIntersection {
 	constructor() {

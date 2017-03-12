@@ -37,9 +37,9 @@ export const STREETS = {
 	B: "B"
 };
 
-export const TIMINGS = {
-	1: 4.5 * ONE_MINUTE,
-	2: 30 * ONE_SECOND,
-	3: 4.5 * ONE_MINUTE,
-	4: 30 * ONE_SECOND
+export let TIMINGS = {
+	1: 0.1 * ONE_MINUTE,
+	2: 10 * ONE_SECOND,
+	3: 0.1 * ONE_MINUTE,
+	4: 10 * ONE_SECOND
 };

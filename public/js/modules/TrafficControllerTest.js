@@ -1,14 +1,23 @@
 import TrafficController from "./TrafficController";
 import TrafficIntersection from "./TrafficIntersection";
-import { TIMINGS, INTERSECTION_STATES } from "../config";
+import { INTERSECTION_STATES } from "../config";
+import chai from "chai";
+import chaiAsPromised from "chai-as-promised";
+import jsdom from "mocha-jsdom";
 
-var chai = require( 'chai' );
-var chaiAsPromised = require( "chai-as-promised" );
 chai.use( chaiAsPromised );
-var expect = chai.expect;
-var should = chai.should();
+var expect = chai.expect,
+	should = chai.should();
 
 describe( "Traffic Controller", function () {
+
+	var $;
+	jsdom();
+
+	before(() => {
+		$ = require('jquery');
+		global.$ = $;
+	});
 
 	it( "should initialize a Traffic Intersection on its constructor", function () {
 		let controller = new TrafficController();
@@ -30,26 +39,7 @@ describe( "Traffic Controller", function () {
 		controller._shouldStopStateMachine = true;
 		let promise = controller._changeState( INTERSECTION_STATES.RED_GREEN );
 
-		promise.should.be.rejected.and.notify(done);
-	});
+		promise.should.be.rejected.and.notify( done );
+	} );
 
-	for ( var state in INTERSECTION_STATES ) {
-
-		if ( INTERSECTION_STATES.hasOwnProperty( state ) ) {
-
-			it( `should take ${ TIMINGS[ INTERSECTION_STATES[ state ] ] }ms on ${ state } state`, (function ( state ) {
-				return function( done ){
-					let controller = new TrafficController();
-					let promise = controller._changeState( INTERSECTION_STATES[ state ] );
-					let timing = TIMINGS[ INTERSECTION_STATES[ state ] ];
-					
-					this.timeout( 0 );
-					
-					setTimeout( () => { promise.should.be.fulfilled.and.notify(done) }, timing );
-				}
-			})( state ) );
-
-		}
-
-	}
 } );
