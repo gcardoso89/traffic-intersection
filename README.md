@@ -57,4 +57,11 @@ Sun Mar 12 2017 20:12:14 GMT+0000 (WET)	| YELLOW_RED	| N: YELLOW - S: YELLOW	| W
 
 ### Running the tests
 You can only run the tests on a local/testing environment. I've not included the test dependencies in production.
+
+For Mac users
 - After running `$ npm install`, just run `$ npm test`
+
+For Windows users
+- Run `$ npm install mocha -g` to install Mocha globally
+- Then, instead of using the npm test command, run this
+`$ mocha "./public/js/**/*Test.js" --require babel-polyfill --compilers js:babel-core/register --trace-warnings`
