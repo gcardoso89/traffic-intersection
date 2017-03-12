@@ -56,4 +56,5 @@ Sun Mar 12 2017 20:12:14 GMT+0000 (WET)	| YELLOW_RED	| N: YELLOW - S: YELLOW	| W
 
 
 ### Running the tests
+You can only run the tests on a local/testing environment. I've not included the test dependencies in production.
 - After running `$ npm install`, just run `$ npm test`
