@@ -1,4 +1,5 @@
 import TrafficIntersection from "./TrafficIntersection";
+import TrafficControllerView from "../views/TrafficControllerView";
 import { TIMINGS, INTERSECTION_STATES, STREETS, LIGHT_STATES } from "../config";
 
 /**
@@ -6,13 +7,45 @@ import { TIMINGS, INTERSECTION_STATES, STREETS, LIGHT_STATES } from "../config";
  * Has a state machine that controls the intersection states.
  */
 export default class TrafficController {
-	constructor() {
+	constructor( timings ) {
 		this._intersection = new TrafficIntersection();
+		this._view = new TrafficControllerView( this );
+		this._timings = timings || TIMINGS;
 		this._currentState = null;
 		this._currentTimer = null;
-		this._currentPromiseRunning = null;
-		this._isStateMachineRunning = false;
 		this._shouldStopStateMachine = false;
+		this._isStateMachineRunning = false;
+		this._intersectionHistory = [];
+	}
+
+	start( duration ) {
+		if ( this._isStateMachineRunning ){
+			return;
+		}
+		if ( duration ){
+			setTimeout( () => this.stop(), duration );
+		}
+		this._isStateMachineRunning = true;
+		this._shouldStopStateMachine = false;
+		this._intersectionHistory.length = 0;
+		this._view.update();
+		this._intersectionStateMachine();
+	}
+
+	stop() {
+		this._shouldStopStateMachine = true;
+		this._intersection.changeStreetState( STREETS.A, LIGHT_STATES.OFF );
+		this._intersection.changeStreetState( STREETS.B, LIGHT_STATES.OFF );
+		this._currentState = null;
+		this._isStateMachineRunning = false;
+	}
+	
+	isRunning() {
+		return this._isStateMachineRunning;
+	}
+	
+	getHistory() {
+		return this._intersectionHistory;
 	}
 
 	/**
@@ -23,7 +56,7 @@ export default class TrafficController {
 	 */
 	async _intersectionStateMachine() {
 		await this._changeState( INTERSECTION_STATES.RED_GREEN );
-		
+
 		await this._changeState( INTERSECTION_STATES.RED_YELLOW );
 
 		await this._changeState( INTERSECTION_STATES.GREEN_RED );
@@ -33,32 +66,10 @@ export default class TrafficController {
 		if ( !this._shouldStopStateMachine ) {
 			this._intersectionStateMachine();
 		} else {
-			this._isStateMachineRunning = false;
 			return true;
 		}
 	}
-
-	isRunning() {
-		return this._isStateMachineRunning;
-	}
-
-	start( duration ) {
-		if ( duration ){
-			
-		}
-		this._isStateMachineRunning = true;
-		this._shouldStopStateMachine = false;
-		this._intersectionStateMachine();
-	}
-
-	stop() {
-		this._shouldStopStateMachine = true;
-		this._clearCurrentTimer();
-		if ( this._currentPromiseRunning ) {
-			this._currentPromiseRunning();
-		}
-	}
-
+	
 	/**
 	 * Returns a Promise to block the async function from moving forward, until it reaches the final timing.
 	 * When the state delay ends, the Promise is fulfilled and the async function moves the following state.
@@ -67,21 +78,16 @@ export default class TrafficController {
 	 * @private
 	 */
 	_changeState( newState ) {
-		this._currentPromiseRunning = null;
-
-		return new Promise( ( resolve, reject ) => {
-			if ( this._shouldStopStateMachine ) {
-				reject();
-				this._currentState = null;
-			}
-
+		if ( this._shouldStopStateMachine ) {
+			return null;
+		}
+		
+		return new Promise( ( resolve ) => {
+			this._changeIntersectionState( newState );
 			this._currentState = newState;
-			this._changeIntersectionState( this._currentState );
 
 			this._clearCurrentTimer();
-			this._currentTimer = setTimeout( resolve, TIMINGS[ this._currentState ] );
-
-			this._currentPromiseRunning = reject;
+			this._currentTimer = setTimeout( resolve, this._timings[ this._currentState ] );
 		} );
 	}
 
@@ -110,6 +116,12 @@ export default class TrafficController {
 				this._intersection.changeStreetState( STREETS.B, LIGHT_STATES.RED );
 				break;
 		}
+		this._intersectionHistory.push({
+			date: new Date(),
+			state: currentState,
+			intersection : $.extend( {}, this._intersection.getLayout() )
+		});
+		this._view.update();
 	}
 
 	_clearCurrentTimer() {

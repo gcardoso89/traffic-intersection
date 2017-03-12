@@ -8,7 +8,7 @@ import TrafficLightView from "../views/TrafficLightView";
 export default class TrafficLight {
 	constructor( id ) {
 		this._id = id;
-		this._currentState = LIGHT_STATES.RED;
+		this._currentState = LIGHT_STATES.OFF;
 		this._view = new TrafficLightView( this );
 	}
 

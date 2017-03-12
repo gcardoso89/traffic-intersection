@@ -8,16 +8,25 @@ export const INTERSECTION_STATES = {
 	YELLOW_RED: 4
 };
 
+export const INTERSECTION_STATES_NAMES = {
+	1: "RED_GREEN",
+	2: "RED_YELLOW",
+	3: "GREEN_RED",
+	4: "YELLOW_RED"
+};
+
 export const LIGHT_STATES = {
 	RED: 0,
 	YELLOW: 1,
-	GREEN: 2
+	GREEN: 2,
+	OFF: 3
 };
 
 export const LIGHT_NAMES = {
 	0: 'RED',
 	1: 'YELLOW',
-	2: 'GREEN'
+	2: 'GREEN',
+	3: 'OFF'
 };
 
 export const TRAFFIC_LIGHT_IDS = {
@@ -37,9 +46,9 @@ export const STREETS = {
 	B: "B"
 };
 
-export let TIMINGS = {
-	1: 0.1 * ONE_MINUTE,
-	2: 10 * ONE_SECOND,
-	3: 0.1 * ONE_MINUTE,
-	4: 10 * ONE_SECOND
+export const TIMINGS = {
+	1: 4.5 * ONE_MINUTE,
+	2: 30 * ONE_SECOND,
+	3: 4.5 * ONE_MINUTE,
+	4: 30 * ONE_SECOND
 };

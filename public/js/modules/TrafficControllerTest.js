@@ -9,15 +9,22 @@ chai.use( chaiAsPromised );
 var expect = chai.expect,
 	should = chai.should();
 
+let mockTimings = {
+	1: 10,
+	2: 10,
+	3: 10,
+	4: 10
+};
+
 describe( "Traffic Controller", function () {
 
 	var $;
 	jsdom();
 
-	before(() => {
-		$ = require('jquery');
+	before( () => {
+		$ = require( 'jquery' );
 		global.$ = $;
-	});
+	} );
 
 	it( "should initialize a Traffic Intersection on its constructor", function () {
 		let controller = new TrafficController();
@@ -34,12 +41,41 @@ describe( "Traffic Controller", function () {
 		expect( controller._changeState( INTERSECTION_STATES.YELLOW_RED ) ).to.be.a( 'promise' );
 	} );
 
-	it( "should reject the change state promise if the controller is asked to be stopped", function ( done ) {
+	it( "should not return a promise if the controller is asked to be stopped", function ( ) {
 		let controller = new TrafficController();
 		controller._shouldStopStateMachine = true;
-		let promise = controller._changeState( INTERSECTION_STATES.RED_GREEN );
+		expect( controller._changeState( INTERSECTION_STATES.RED_GREEN ) ).to.equal( null );
+	} );
 
-		promise.should.be.rejected.and.notify( done );
+	it( "should go from RED_GREEN to GREEN_RED during the state machine", async function () {
+		this.timeout( 0 );
+
+		let controller = new TrafficController( mockTimings );
+
+		await controller._changeState( INTERSECTION_STATES.RED_GREEN );
+		expect( controller._currentState ).to.equal( INTERSECTION_STATES.RED_GREEN );
+
+		await controller._changeState( INTERSECTION_STATES.RED_YELLOW );
+		expect( controller._currentState ).to.equal( INTERSECTION_STATES.RED_YELLOW );
+
+		await controller._changeState( INTERSECTION_STATES.GREEN_RED );
+		expect( controller._currentState ).to.equal( INTERSECTION_STATES.GREEN_RED );
+
+		await controller._changeState( INTERSECTION_STATES.YELLOW_RED );
+		expect( controller._currentState ).to.equal( INTERSECTION_STATES.YELLOW_RED );
+	} );
+
+	it( 'should set the currentState as null after stopping the traffic controller', function ( done ) {
+		this.timeout( 700 );
+
+		let controller = new TrafficController( mockTimings );
+		controller.start( 1000 );
+
+		setTimeout( () => {
+			controller.stop();
+			should.not.exist( controller._currentState );
+			done();
+		}, 500 );
 	} );
 
 } );

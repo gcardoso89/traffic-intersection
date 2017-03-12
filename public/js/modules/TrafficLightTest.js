@@ -22,10 +22,10 @@ describe( "Traffic Light", function () {
 		expect( TRAFFIC_LIGHT_IDS ).to.have.property( trafficLight.getId() );
 	} );
 
-	it( 'should be initialized in RED light state', () => {
+	it( 'should be initialized in OFF light state', () => {
 		let trafficLight = new TrafficLight( "N" );
 
-		expect( trafficLight.getCurrentState() ).to.equal( LIGHT_STATES.RED );
+		expect( trafficLight.getCurrentState() ).to.equal( LIGHT_STATES.OFF );
 	} );
 
 	it( 'should return the new light state when its current state is changed', () => {
@@ -43,8 +43,7 @@ describe( "Traffic Light", function () {
 
 	it( 'should throw an error when the RED state is changed to a YELLOW state', () => {
 		let trafficLight = new TrafficLight( "N" );
-
-		expect( trafficLight.getCurrentState() ).to.equal( LIGHT_STATES.RED );
+		expect( trafficLight.changeState( LIGHT_STATES.RED ) ).to.equal( LIGHT_STATES.RED );
 		expect( TrafficLight.prototype.changeState.bind( trafficLight, LIGHT_STATES.YELLOW ) ).to.throw( Error );
 	} );
 

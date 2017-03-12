@@ -5,7 +5,7 @@
   "scripts": {
     "start": "./node_modules/.bin/webpack && node ./bin/www",
     "watch": "./node_modules/.bin/webpack --watch",
-    "test": "./node_modules/mocha/bin/mocha 'public/js/**/*Test.js' --require babel-polyfill --compilers js:babel-core/register"
+    "test": "./node_modules/mocha/bin/mocha 'public/js/**/*Test.js' --require babel-polyfill --compilers js:babel-core/register --trace-warnings"
   },
   "dependencies": {
     "body-parser": "~1.15.1",

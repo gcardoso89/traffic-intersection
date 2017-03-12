@@ -1,6 +1,6 @@
 import TrafficIntersection from "./TrafficIntersection";
 import TrafficLight from "./TrafficLight";
-import { INTERSECTION_LAYOUT, STREETS } from "../config";
+import { INTERSECTION_LAYOUT } from "../config";
 import chai from "chai";
 import jsdom from "mocha-jsdom";
 
