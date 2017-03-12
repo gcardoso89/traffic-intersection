@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "./node_modules/.bin/webpack && node ./bin/www",
+    "start": "node ./bin/www",
     "watch": "./node_modules/.bin/webpack --watch",
     "test": "./node_modules/mocha/bin/mocha 'public/js/**/*Test.js' --require babel-polyfill --compilers js:babel-core/register --trace-warnings"
   },
