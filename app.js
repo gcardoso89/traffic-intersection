@@ -10,8 +10,8 @@ var isDevEnv = app.get( 'env' ) === 'development';
 
 // view engine setup
 app.set( 'views', path.join( __dirname, 'views' ) );
-app.use( express.static( path.join( __dirname, 'public' ) ) );
 app.set( 'view engine', 'hbs' );
+app.use( express.static( path.join( __dirname, 'public' ) ) );
 app.use( logger( 'dev' ) );
 app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded( { extended: false } ) );
